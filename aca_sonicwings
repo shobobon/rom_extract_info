@@ -1,0 +1,26 @@
+Use Nintendo Switch version.
+Open the Arcade Archives AERO FIGHTERS NSP using NxFileviewer.
+Extract the main of program section0.
+
+Use Hactool.exe to uncompressed the main.
+hactool.exe  --uncompressed=main_uncompressed -t nso0 main
+
+Extract ROM from main_uncompressed.
+
+dd if=main_uncompressed of=it-19-01 bs=1 skip=$((0x9a93a6)) count=$((0x40000))
+dd if=main_uncompressed of=it-19-02 bs=1 skip=$((0x6a93a6)) count=$((0x80000))
+dd if=main_uncompressed of=it-19-03 bs=1 skip=$((0x6293a6)) count=$((0x80000))
+dd if=main_uncompressed of=it-19-04 bs=1 skip=$((0x7293a6)) count=$((0x80000))
+dd if=main_uncompressed of=it-19-05 bs=1 skip=$((0x7a93a6)) count=$((0x80000))
+dd if=main_uncompressed of=it-19-06 bs=1 skip=$((0x8a93a6)) count=$((0x100000))
+
+dd if=main_uncompressed of=swap.tmp bs=1 skip=$((0x2549ce)) count=$((0x80000))
+dd if=swap.tmp of=2.149 bs=2 skip=0 iflag=skip_bytes 2>/dev/null
+dd if=swap.tmp of=1.111 bs=2 skip=1 iflag=skip_bytes 2>/dev/null
+
+dd if=main_uncompressed of=g26 bs=1 skip=$((0x8693a6)) count=$((0x40000))
+dd if=main_uncompressed of=g27 bs=1 skip=$((0x8293a6)) count=$((0x40000))
+dd if=main_uncompressed of=2.153 bs=1 skip=$((0x9e93a6)) count=$((0x20000))
+
+Compress the extracted file as sonicwi.zip.
+Confirmed to work with FBneo, can probably be played with M.A.M.E.
